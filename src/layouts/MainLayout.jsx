@@ -1,6 +1,9 @@
 import Header from "../components/Header";
 import LatestNews from "../components/LatestNews";
+import MainNews from "../components/MainNews";
 import Navbar from "../components/Navbar";
+import RightSide from "../components/RightSide";
+import Sidebar from "../components/LeftSidebar";
 
 const MainLayout = () => {
   return (
@@ -12,9 +15,19 @@ const MainLayout = () => {
         </section>
       </header>
       <nav>
-        <Navbar/>
+        <Navbar />
       </nav>
-      <main></main>
+      <main className="w-11/12 mx-auto md:grid grid-cols-12 gap-4">
+        <section className="col-span-3">
+          <Sidebar />
+        </section>
+        <section className="col-span-6">
+          <MainNews />
+        </section>
+        <section className="col-span-3">
+          <RightSide />
+        </section>
+      </main>
     </div>
   );
 };
