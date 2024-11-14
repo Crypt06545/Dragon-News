@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import LatestNews from "../components/LatestNews";
+import Navbar from "../components/Navbar";
 
 const MainLayout = () => {
   return (
@@ -10,7 +11,9 @@ const MainLayout = () => {
           <LatestNews />
         </section>
       </header>
-      <nav></nav>
+      <nav>
+        <Navbar/>
+      </nav>
       <main></main>
     </div>
   );
