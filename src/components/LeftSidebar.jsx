@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const [categories, setCategories] = useState([]);
@@ -14,9 +15,15 @@ const Sidebar = () => {
       <h2 className="font-semibold mb-4">All Category</h2>
       <div className="flex flex-col gap-2">
         {categories.map((category) => (
-          <button className="btn bg-base-100 border-none" key={category.category_id}>
+          <NavLink
+            to={`/category/${category.category_id}`}
+            className={({ isActive }) =>
+              `btn bg-base-100 border-none ${isActive ? "bg-stone-300" : ""}`
+            }
+            key={category.category_id}
+          >
             {category.category_name}
-          </button>
+          </NavLink>
         ))}
       </div>
     </div>
