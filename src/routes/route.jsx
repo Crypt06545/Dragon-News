@@ -15,7 +15,10 @@ const router = createBrowserRouter([
       {
         path: "/category/:id",
         element: <MainNews />,
-        loader:({params})=> fetch(`https://openapi.programming-hero.com/api/news/category/${params.id}`)
+        loader: ({ params }) =>
+          fetch(
+            `https://openapi.programming-hero.com/api/news/category/${params.id}`
+          ),
       },
     ],
   },

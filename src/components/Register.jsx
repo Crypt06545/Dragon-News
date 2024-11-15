@@ -1,7 +1,35 @@
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+
+/* eslint-disable no-unused-vars */
 const Register = () => {
+  const { createNewUser } = useContext(AuthContext);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    const name = form.get("name");
+    const email = form.get("email");
+    const password = form.get("password");
+    const photo = form.get("photo");
+    const condition = form.get("condition");
+    createNewUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+    console.log({ name, email, password, photo, condition });
+  };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md p-8 bg-white shadow-md rounded-lg"
+      >
         <h2 className="text-2xl font-semibold text-center mb-6">
           Register your account
         </h2>
@@ -9,6 +37,7 @@ const Register = () => {
           <div>
             <label className="block font-medium">Your Name</label>
             <input
+              name="name"
               type="text"
               placeholder="Enter your name"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
@@ -17,6 +46,7 @@ const Register = () => {
           <div>
             <label className="block font-medium">Photo URL</label>
             <input
+              name="photo"
               type="text"
               placeholder="Enter your photo URL"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
@@ -25,6 +55,7 @@ const Register = () => {
           <div>
             <label className="block font-medium">Email</label>
             <input
+              name="email"
               type="email"
               placeholder="Enter your email address"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
@@ -33,6 +64,7 @@ const Register = () => {
           <div>
             <label className="block font-medium">Password</label>
             <input
+              name="password"
               type="password"
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
@@ -40,11 +72,12 @@ const Register = () => {
           </div>
           <div className="flex items-center">
             <input
+              name="condition"
               type="checkbox"
               className="w-4 h-4 text-black border-gray-300 rounded focus:ring-0"
             />
             <label className="ml-2 text-sm text-gray-700">
-              Accept{" "}
+              Accept
               <span className="font-semibold text-black">
                 Terms & Conditions
               </span>
