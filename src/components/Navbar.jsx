@@ -24,7 +24,7 @@ const Navbar = () => {
         <div>
           <img src={userIcon} alt="User Icon" />
         </div>
-        <Link to={"/auth"}>
+        <Link to={"/auth/signUp"}>
           <button className="btn btn-neutral rounded-none">Login</button>
         </Link>
       </div>
