@@ -1,25 +1,25 @@
-// import { useContext } from "react";
-// import { AuthContext } from "../provider/AuthProvider";
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
 
 /* eslint-disable no-unused-vars */
 const Login = () => {
-//   const { createNewUser } = useContext(AuthContext);
+  const { logIn } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const email = form.get("email");
     const password = form.get("password");
 
-    // createNewUser(email, password)
-    //   .then((res) => {
-    //     const user = res.user;
-    //     console.log(user);
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log(errorCode, errorMessage);
-    //   });
+    logIn(email, password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
     console.log({ email, password});
   };
   return (

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user,logOut } = useContext(AuthContext);
 
   return (
     <div className="w-11/12 mx-auto py-3 flex justify-between items-center">
@@ -24,9 +24,12 @@ const Navbar = () => {
         <div>
           <img src={userIcon} alt="User Icon" />
         </div>
-        <Link to={"/auth/signUp"}>
+        {
+          user && user.email ?<button onClick={logOut} className="btn btn-neutral rounded-none">Log-out</button>:<Link to={"/auth/signUp"}>
           <button className="btn btn-neutral rounded-none">Login</button>
         </Link>
+        }
+        
       </div>
     </div>
   );
