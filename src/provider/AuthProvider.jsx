@@ -1,26 +1,33 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
 import app from "../firebase/Firebase.config";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
+  console.log(user);
 
   const createNewUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // Add an effect to observe user authentication state
-  //   useEffect(() => {
-  //     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-  //       setUser(currentUser);
-  //     });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
 
-  //     // Cleanup subscription on unmount
-  //     return () => unsubscribe();
-  //   }, [auth]);
+    // cleanUp function
+    return () => {
+      unsubscribe();
+    };
+  }, [auth]);
 
   // Context value
   const userInfo = {

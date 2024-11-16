@@ -3,26 +3,27 @@ import { AuthContext } from "../provider/AuthProvider";
 
 /* eslint-disable no-unused-vars */
 const Register = () => {
-  const { createNewUser } = useContext(AuthContext);
+  const { createNewUser,setUser } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    const name = form.get("name");
+    // const name = form.get("name");
     const email = form.get("email");
     const password = form.get("password");
-    const photo = form.get("photo");
-    const condition = form.get("condition");
+    // const photo = form.get("photo");
+    // const condition = form.get("condition");
     createNewUser(email, password)
       .then((res) => {
         const user = res.user;
-        console.log(user);
+        setUser(user)
+        // console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
-    console.log({ name, email, password, photo, condition });
+    // console.log({ name, email, password, photo, condition });
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -39,6 +40,7 @@ const Register = () => {
             <input
               name="name"
               type="text"
+              required
               placeholder="Enter your name"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
@@ -58,6 +60,7 @@ const Register = () => {
               name="email"
               type="email"
               placeholder="Enter your email address"
+              required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
           </div>
@@ -66,6 +69,7 @@ const Register = () => {
             <input
               name="password"
               type="password"
+              required
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
@@ -74,6 +78,7 @@ const Register = () => {
             <input
               name="condition"
               type="checkbox"
+              required
               className="w-4 h-4 text-black border-gray-300 rounded focus:ring-0"
             />
             <label className="ml-2 text-sm text-gray-700">
