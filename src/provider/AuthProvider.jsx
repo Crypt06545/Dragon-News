@@ -8,38 +8,56 @@ import {
   signOut,
 } from "firebase/auth";
 import app from "../firebase/Firebase.config";
+
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
-  console.log(user);
+  const [loading, setLoading] = useState(true);
 
-  // sign Up a user
-  const createNewUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  // Sign up a user
+  const createNewUser = async (email, password) => {
+    setLoading(true);
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      return result;
+    } finally {
+      setLoading(false);
+    }
   };
-  // log in a user
-  const logIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+
+  // Log in a user
+  const logIn = async (email, password) => {
+    setLoading(true);
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      return result;
+    } finally {
+      setLoading(false);
+    }
   };
-  // log out a user
-  const logOut = () => {
-    return signOut(auth);
+
+  // Log out a user
+  const logOut = async () => {
+    setLoading(true);
+    try {
+      await signOut(auth);
+    } finally {
+      setLoading(false);
+    }
   };
-  // Add an effect to observe user authentication state
+
+  // Observe user authentication state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
 
-    // cleanUp function
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, [auth]);
 
-  // Context value
   const userInfo = {
     user,
     setUser,
@@ -47,11 +65,10 @@ const AuthProvider = ({ children }) => {
     createNewUser,
     logIn,
     logOut,
+    loading,
   };
 
-  return (
-    <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
